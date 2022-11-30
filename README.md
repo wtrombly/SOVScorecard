@@ -6,9 +6,7 @@ SOVScorecard is a web application that is used for valuation professionals to co
 
 Use github to clone the repository to your local hard drive. Open the Scorecard.Rproj. Open the global.R file and make sure you have all the required librairies installed. Then click Run App in R Studio.
 
-```bash
-https://github.com/wtrombly/SOVScorecard/blob/main/dependencies.JPG
-```
+![Dependencies](https://github.com/wtrombly/SOVScorecard/blob/main/dependencies.JPG)
 
 ## Usage
 
