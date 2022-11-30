@@ -8,6 +8,11 @@
 
 # User-specific files
 .Ruserdata
+notes.txt
+parameterizedOutputs.txt
+requiredInputs.txt
+rMarkdownInputs.txt
+
 
 # Example code in package build process
 *-Ex.R
