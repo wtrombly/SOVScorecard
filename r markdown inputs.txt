@@ -1,0 +1,26 @@
+writeLines(c("Validity SCA Category 1 --", input$validsca1, "\n"  ))
+writeLines(c("Validity SCA Category 2 --", input$validsca2, "\n"  ))
+writeLines(c("Validity SCA Category 3 --", input$validsca3, "\n"  ))
+writeLines(c("Validity SCA Category 4 --", input$validsca4, "\n"  ))
+writeLines(c("Validity SCA Category 5 --", input$validsca5, "\n"  ))
+writeLines(c("Validity SCA Category 6 --", input$validsca6, "\n"  ))
+writeLines(c("Validity SCA Category 7 --", input$validsca7, "\n"  ))
+writeLines(c("Validity SCA Category 8 --", input$validsca8, "\n" ))
+
+writeLines(c("Validity Cost Category 1 --", input$validcost1, "\n"  ))
+writeLines(c("Validity Cost Category 2 --", input$validcost2, "\n"  ))
+writeLines(c("Validity Cost Category 3 --", input$validcost3, "\n"  ))
+writeLines(c("Validity Cost Category 4 --", input$validcost4, "\n"  ))
+
+writeLines(c("Validity Income Category 1 --", input$validincome1, "\n"  ))
+writeLines(c("Validity Income Category 2 --", input$validincome2, "\n"  ))
+writeLines(c("Validity Income Category 3 --", input$validincome3, "\n"  ))
+writeLines(c("Validity Income Category 4 --", input$validincome4, "\n"  ))
+
+writeLines(c("Subject Risk Category 1 --", input$risk1, "\n"  ))
+writeLines(c("Subject Risk Category 2 --", input$risk2, "\n"  ))
+writeLines(c("Subject Risk Category 3 --", input$risk3, "\n"  ))
+
+writeLines(c("Subject Credibility Category 1 --", input$cred1, "\n"  ))
+writeLines(c("Subject Credibility Category 2 --", input$cred2, "\n"  ))
+writeLines(c("Subject Credibility Category 3 --", input$cred3, "\n"  ))

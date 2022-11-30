@@ -1,0 +1,60 @@
+polished:
+  Package: polished
+  Repository: CRAN
+  Version: 0.6.1
+shiny:
+  Package: shiny
+  Repository: CRAN
+  Version: 1.6.0
+tidyverse:
+  Package: tidyverse
+  Repository: CRAN
+  Version: 1.3.1
+DT:
+  Package: DT
+  Repository: CRAN
+  Version: '0.20'
+shinythemes:
+  Package: shinythemes
+  Repository: CRAN
+  Version: 1.2.0
+tidyquant:
+  Package: tidyquant
+  Repository: CRAN
+  Version: 1.0.3
+ggside:
+  Package: ggside
+  Repository: CRAN
+  Version: 0.1.2
+lubridate:
+  Package: lubridate
+  Repository: CRAN
+  Version: 1.7.10
+ggpmisc:
+  Package: ggpmisc
+  Repository: CRAN
+  Version: 0.4.0
+shinyWidgets:
+  Package: shinyWidgets
+  Repository: CRAN
+  Version: 0.6.0
+rclipboard:
+  Package: rclipboard
+  Repository: CRAN
+  Version: 0.1.5
+knitr:
+  Package: knitr
+  Repository: CRAN
+  Version: '1.33'
+rmarkdown:
+  Package: rmarkdown
+  Repository: CRAN
+  Version: '2.9'
+kableExtra:
+  Package: kableExtra
+  Repository: CRAN
+  Version: 1.3.4
+htmltools:
+  Package: htmltools
+  Repository: CRAN
+  Version: 0.5.1.1

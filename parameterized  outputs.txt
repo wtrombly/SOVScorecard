@@ -1,0 +1,36 @@
+ # Set up parameters to pass to Rmd document
+        params <- list(r1 = input$reli1,
+                       r2 = input$reli2,
+                       r3 = input$reli3,
+                       r4 = input$reli4,
+                       r5 = input$reli5,
+                       vsca1 = input$validsca1,
+                       vsca2 = input$validsca2,
+                       vsca3 = input$validsca3,
+                       vsca4 = input$validsca4,
+                       vsca5 = input$validsca5,
+                       vsca6 = input$validsca6,
+                       vsca7 = input$validsca7,
+                       vsca8 = input$validsca8,
+                       vc1 = input$validcost1,
+                       vc2 = input$validcost2,
+                       vc3 = input$validcost3,
+                       vc4 = input$validcost4,
+                       vi1 = input$validincome1,
+                       vi2 = input$validincome2,
+                       vi3 = input$validincome3,
+                       vi4 = input$validincome4,
+                       rk1 = input$risk1,
+                       rk2 = input$risk2,
+                       rk3 = input$risk3,
+                       c1 = input$cred1,
+                       c2 = input$cred2,
+                       c3 = input$cred3,
+                       plot = output$hist,
+                       sd = output$standardDev,
+                       sddist = output$standardDevDistance,
+                       crange = output$withinMax)
+
+
+
+        

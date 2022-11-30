@@ -1,0 +1,485 @@
+---
+title: "Risk and Reliability Report"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: pdf_document
+
+---
+
+```{r introduction, include = TRUE, echo=FALSE, results='asis'}
+writeLines(c("Students of Value Certification (“Copyright © The Real Estate Examiner 2022”)", "\n", "\n", "The signing appraiser using this scorecard has exceeded the minimum standard of Fannie Mae and USPAP limited to the scores presented. The minimum standard is considered low and not the best available product for intended users. The appraiser has performed additional analysis and reporting of appraisal results to uphold the public trust of the profession, ensure compliance with higher standards of valuation, and does consider appraisal modernization as an ongoing concern needing continued refinement and development. The minimum standard presented to appraisers has fundamental flaws that are not readily considered in traditional appraisal assignments, and therefore this certifies the signing appraiser has discussed the shortcomings and risks involved in the appraisal results based on the factors presented. 
+Through no fault of the appraiser, some appraisals provide intended users more risk, and some appraisals are less reliable due to the data sets that are available, an imperfect marketplace, and subject property characteristics and influences. When the intended user uses the appraisal with these inherent weaknesses, they assume the responsibility of knowing these weaknesses and acting with them in mind and inherently assume that corresponding responsibility. 
+", "\n",  "\n"))
+```
+
+```{r histogram, include = TRUE, echo=FALSE, results='asis'}
+
+df2 <- read.csv(input$comparables$datapath, header = input$header, sep = input$sep)
+        hist(df2$ClosePrice,  breaks = input$bins, main = c("Close Price Mean"), xlab = "Comparables Close Price",)
+        av <- input$appraiserValue
+        abline(v = mean(df2$ClosePrice),col = "red")
+        abline(v = av ,col = "blue")
+        writeLines(c("\n"))
+
+        writeLines(c("Minumum Close Price = ", min(df2$ClosePrice) , "\n"))
+        writeLines(c("First Quartile Close Price = ", quantile(df2$ClosePrice, prob = c(.25)) , "\n"))
+        writeLines(c("Median Close Price = ", median(df2$ClosePrice), "\n"))
+        writeLines(c("Mean Close Price = ", mean(df2$ClosePrice), "\n"))
+        writeLines(c("First Quartile Close Price = ", quantile(df2$ClosePrice, prob = c(.75)) , "\n"))
+        writeLines(c("Maximum Close Price = ", max(df2$ClosePrice) , "\n"))
+        
+        writeLines("The above histogram represents the comparable sales data set. The red line represents the mean value of comparable sales and the blue line represents the developed opinion of value for the subject property.")
+        writeLines(c("\n"))
+        
+         writeLines(c("The Standard Deviation from the mean = ", as.integer(sd(df2$ClosePrice)), "\n"))
+        writeLines(c("\n"))
+        
+        x <- abs((mean(df2$ClosePrice)-av))
+    writeLines(if(x <= sd(df2$ClosePrice)){
+      "Your opinion of value is within 1 Standard Deviation from the Mean"
+    } else if ((x <= (2*sd(df2$ClosePrice)))){
+      "Your opinion of value is within 2 Standard Deviations from the Mean"
+    } else if ((x <= (3*sd(df2$ClosePrice)))){
+      "Your opinion of value is within 3 Standard Deviations from the Mean"
+    } else if ((x > (3*sd(df2$ClosePrice)))){
+      "Your opinion of value is greater than 3 Standard Deviations from the Mean"
+    } )
+        writeLines(c("\n"))
+        
+       writeLines( if(between(av, min(df2$ClosePrice), max(df2$ClosePrice))){
+      "The opinion of value is within the comparable sales price range"
+    } else {
+      "The opinion of value does not fall within the comparable sales price range"
+    })
+       
+```
+
+
+\newpage
+
+```{r ScoreCard, include=TRUE, echo=FALSE, results='asis'}
+
+writeLines(c("The risk and reliability section of this report is developed based on 4 different sections.","\n","\n", "Why does the score appear to be low? This is due to the ratings system developed on a 1 to 5 scare with 1 being the lowest and 5 being the highest score possible. The ratings system is developed to give a higher score for ideal appraisal results conditions, this is especially true of the Validity factor which is considered to be the most important.", "\n"))
+
+ reliweight20 <- 0.2
+  r1 <-   as.double(( if(grepl("Rating 1", input$reli1, ignore.case = TRUE)){
+      1 * reliweight20
+    } else if((grepl("Rating 2", input$reli1, ignore.case = TRUE))){
+      2 * reliweight20
+    } else if((grepl("Rating 3", input$reli1, ignore.case = TRUE))){
+      3 * reliweight20
+    } else if((grepl("Rating 4", input$reli1, ignore.case = TRUE))){
+      4 * reliweight20
+    } else if((grepl("Rating 5", input$reli1, ignore.case = TRUE))){
+      5 * reliweight20
+    } ))
+    
+   r2 <-    as.double(( if(grepl("Rating 1", input$reli2, ignore.case = TRUE)){
+        1 * reliweight20
+      } else if((grepl("Rating 2", input$reli2, ignore.case = TRUE))){
+        2 * reliweight20
+      } else if((grepl("Rating 3", input$reli2, ignore.case = TRUE))){
+        3 * reliweight20
+      } else if((grepl("Rating 4", input$reli2, ignore.case = TRUE))){
+        4 * reliweight20
+      } else if((grepl("Rating 5", input$reli2, ignore.case = TRUE))){
+        5 * reliweight20
+      } ))
+   
+   r3 <-    as.double(( if(grepl("Rating 1", input$reli3, ignore.case = TRUE)){
+     1 * reliweight20
+   } else if((grepl("Rating 2", input$reli3, ignore.case = TRUE))){
+     2 * reliweight20
+   } else if((grepl("Rating 3", input$reli3, ignore.case = TRUE))){
+     3 * reliweight20
+   } else if((grepl("Rating 4", input$reli3, ignore.case = TRUE))){
+     4 * reliweight20
+   } else if((grepl("Rating 5", input$reli3, ignore.case = TRUE))){
+     5 * reliweight20
+   } ))
+   
+   r4 <-   as.double(( if(grepl("Rating 1", input$reli4, ignore.case = TRUE)){
+     1 * reliweight20
+   } else if((grepl("Rating 2", input$reli4, ignore.case = TRUE))){
+     2 * reliweight20
+   } else if((grepl("Rating 3", input$reli4, ignore.case = TRUE))){
+     3 * reliweight20
+   } else if((grepl("Rating 4", input$reli4, ignore.case = TRUE))){
+     4 * reliweight20
+   } else if((grepl("Rating 5", input$reli4, ignore.case = TRUE))){
+     5 * reliweight20
+   } ))
+   
+   r5 <-  as.double( ( if(grepl("Rating 1", input$reli5, ignore.case = TRUE)){
+     1 * reliweight20
+   } else if((grepl("Rating 2", input$reli5, ignore.case = TRUE))){
+     2 * reliweight20
+   } else if((grepl("Rating 3", input$reli5, ignore.case = TRUE))){
+     3 * reliweight20
+   } else if((grepl("Rating 4", input$reli5, ignore.case = TRUE))){
+     4 * reliweight20
+   } else if((grepl("Rating 5", input$reli5, ignore.case = TRUE))){
+     5 * reliweight20
+   } ))
+   
+    rsum <- r1 + r2 + r3 + r4 + r5
+    writeLines(c("Reliability Score = ",rsum))
+    writeLines(c("\n"))
+    writeLines("The reliability factor is evaluated using the comparable sales data set adjusted for time. In addition, this factor tests the number of comparable sales and where they are located. The use of extraordinary assumptions and or hypothetical conditions is also a factor along with sales price trends in the market place and highest and best use. This factor is weighted at 35% of the overall risk and reliability score.")
+    writeLines(c("\n"))
+    
+    
+    ### VALIDITY####
+    
+    validweight60 <- 0.60
+    validweight25 <- 0.25
+    validweight30 <- 0.30
+    validweight5 <-  0.05
+    v1 <-   as.double(( if(grepl("Rating 1", input$validsca1, ignore.case = TRUE)){
+      1 * validweight25
+    } else if((grepl("Rating 2", input$validsca1, ignore.case = TRUE))){
+      2 * validweight25
+    } else if((grepl("Rating 3", input$validsca1, ignore.case = TRUE))){
+      3 * validweight25
+    } else if((grepl("Rating 4", input$validsca1, ignore.case = TRUE))){
+      4 * validweight25
+    } else if((grepl("Rating 5", input$validsca1, ignore.case = TRUE))){
+      5 * validweight25
+    } ))
+    
+    v2 <-    as.double(( if(grepl("Rating 1", input$validsca2, ignore.case = TRUE)){
+      1 * validweight25
+    } else if((grepl("Rating 2", input$validsca2, ignore.case = TRUE))){
+      2 * validweight25
+    } else if((grepl("Rating 3", input$validsca2, ignore.case = TRUE))){
+      3 * validweight25
+    } else if((grepl("Rating 4", input$validsca2, ignore.case = TRUE))){
+      4 * validweight25
+    } else if((grepl("Rating 5", input$validsca2, ignore.case = TRUE))){
+      5 * validweight25
+    } ))
+    
+    v3 <-    as.double(( if(grepl("Rating 1", input$validsca3, ignore.case = TRUE)){
+      1 * validweight25
+    } else if((grepl("Rating 2", input$validsca3, ignore.case = TRUE))){
+      2 * validweight25
+    } else if((grepl("Rating 3", input$validsca3, ignore.case = TRUE))){
+      3 * validweight25
+    } else if((grepl("Rating 4", input$validsca3, ignore.case = TRUE))){
+      4 * validweight25
+    } else if((grepl("Rating 5", input$validsca3, ignore.case = TRUE))){
+      5 * validweight25
+    } ))
+    
+    v4 <-   as.double(( if(grepl("Rating 1", input$validsca4, ignore.case = TRUE)){
+      1 * validweight25
+    } else if((grepl("Rating 2", input$validsca4, ignore.case = TRUE))){
+      2 * validweight25
+    } else if((grepl("Rating 3", input$validsca4, ignore.case = TRUE))){
+      3 * validweight25
+    } else if((grepl("Rating 4", input$validsca4, ignore.case = TRUE))){
+      4 * validweight25
+    } else if((grepl("Rating 5", input$validsca4, ignore.case = TRUE))){
+      5 * validweight25
+    } ))
+    
+    
+    #### VALIDITY COST#########
+    vc1 <-   as.double(( if(grepl("Rating 1", input$validcost1, ignore.case = TRUE)){
+      1 * validweight25
+    } else if((grepl("Rating 2", input$validcost1, ignore.case = TRUE))){
+      2 * validweight25
+    } else if((grepl("Rating 3", input$validcost1, ignore.case = TRUE))){
+      3 * validweight25
+    } else if((grepl("Rating 4", input$validcost1, ignore.case = TRUE))){
+      4 * validweight25
+    } else if((grepl("Rating 5", input$validcost1, ignore.case = TRUE))){
+      5 * validweight25
+    } ))
+    
+    vc2 <-   as.double(( if(grepl("Rating 1", input$validcost2, ignore.case = TRUE)){
+      1 * validweight25
+    } else if((grepl("Rating 2", input$validcost2, ignore.case = TRUE))){
+      2 * validweight25
+    } else if((grepl("Rating 3", input$validcost2, ignore.case = TRUE))){
+      3 * validweight25
+    } else if((grepl("Rating 4", input$validcost2, ignore.case = TRUE))){
+      4 * validweight25
+    } else if((grepl("Rating 5", input$validcost2, ignore.case = TRUE))){
+      5 * validweight25
+    } ))
+    
+    vc3 <-   as.double(( if(grepl("Rating 1", input$validcost3, ignore.case = TRUE)){
+      1 * validweight25
+    } else if((grepl("Rating 2", input$validcost3, ignore.case = TRUE))){
+      2 * validweight25
+    } else if((grepl("Rating 3", input$validcost3, ignore.case = TRUE))){
+      3 * validweight25
+    } else if((grepl("Rating 4", input$validcost3, ignore.case = TRUE))){
+      4 * validweight25
+    } else if((grepl("Rating 5", input$validcost3, ignore.case = TRUE))){
+      5 * validweight25
+    } ))
+    
+    vc4 <-   as.double(( if(grepl("Rating 1", input$validcost4, ignore.case = TRUE)){
+      1 * validweight25
+    }  else if((grepl("Rating 5", input$validcost4, ignore.case = TRUE))){
+      5 * validweight25
+    } ))
+    
+    ##### VALIDITY INCOME############### 
+    
+    vi1 <-   as.double(( if(grepl("Rating 1", input$validincome1, ignore.case = TRUE)){
+      1 * validweight25
+    } else if((grepl("Rating 2", input$validincome1, ignore.case = TRUE))){
+      2 * validweight25
+    } else if((grepl("Rating 3", input$validincome1, ignore.case = TRUE))){
+      3 * validweight25
+    } else if((grepl("Rating 4", input$validincome1, ignore.case = TRUE))){
+      4 * validweight25
+    } else if((grepl("Rating 5", input$validincome1, ignore.case = TRUE))){
+      5 * validweight25
+    } ))
+    
+    vi2 <-   as.double(( if(grepl("Rating 1", input$validincome2, ignore.case = TRUE)){
+      1 * validweight25
+    } else if((grepl("Rating 2", input$validincome2, ignore.case = TRUE))){
+      2 * validweight25
+    } else if((grepl("Rating 3", input$validincome2, ignore.case = TRUE))){
+      3 * validweight25
+    } else if((grepl("Rating 4", input$validincome2, ignore.case = TRUE))){
+      4 * validweight25
+    } else if((grepl("Rating 5", input$validincome2, ignore.case = TRUE))){
+      5 * validweight25
+    } ))
+    
+    vi3 <-   as.double(( if(grepl("Rating 1", input$validincome3, ignore.case = TRUE)){
+      1 * validweight25
+    } else if((grepl("Rating 2", input$validincome3, ignore.case = TRUE))){
+      2 * validweight25
+    } else if((grepl("Rating 3", input$validincome3, ignore.case = TRUE))){
+      3 * validweight25
+    } else if((grepl("Rating 4", input$validincome3, ignore.case = TRUE))){
+      4 * validweight25
+    } else if((grepl("Rating 5", input$validincome3, ignore.case = TRUE))){
+      5 * validweight25
+    } ))
+    
+    vi4 <-   as.double(( if(grepl("Rating 1", input$validincome4, ignore.case = TRUE)){
+      1 * validweight25
+    }  else if((grepl("Rating 5", input$validincome4, ignore.case = TRUE))){
+      5 * validweight25
+    } ))
+    
+    ################  VALIDITY SCA CONTINUED
+    
+    v5 <-   as.double(( if(grepl("Rating 1", input$validsca5, ignore.case = TRUE)){
+      1 * validweight25
+    } else if((grepl("Rating 2", input$validsca5, ignore.case = TRUE))){
+      2 * validweight25
+    } else if((grepl("Rating 3", input$validsca5, ignore.case = TRUE))){
+      3 * validweight25
+    } else if((grepl("Rating 4", input$validsca5, ignore.case = TRUE))){
+      4 * validweight25
+    } else if((grepl("Rating 5", input$validsca5, ignore.case = TRUE))){
+      5 * validweight25
+    } ))
+    
+    v6 <-   as.double(( if(grepl("Rating 1", input$validsca6, ignore.case = TRUE)){
+      1 * validweight25
+    } else if((grepl("Rating 2", input$validsca6, ignore.case = TRUE))){
+      2 * validweight25
+    } else if((grepl("Rating 3", input$validsca6, ignore.case = TRUE))){
+      3 * validweight25
+    } else if((grepl("Rating 4", input$validsca6, ignore.case = TRUE))){
+      4 * validweight25
+    } else if((grepl("Rating 5", input$validsca6, ignore.case = TRUE))){
+      5 * validweight25
+    } ))
+    
+    
+    v7 <-   as.double(( if(grepl("Rating 1", input$validsca7, ignore.case = TRUE)){
+      1 * validweight25
+    } else if((grepl("Rating 2", input$validsca7, ignore.case = TRUE))){
+      2 * validweight25
+    } else if((grepl("Rating 3", input$validsca7, ignore.case = TRUE))){
+      3 * validweight25
+    } else if((grepl("Rating 4", input$validsca7, ignore.case = TRUE))){
+      4 * validweight25
+    } else if((grepl("Rating 5", input$validsca7, ignore.case = TRUE))){
+      5 * validweight25
+    } ))
+    
+    
+    v8 <-   as.double(( if(grepl("Rating 1", input$validsca8, ignore.case = TRUE)){
+      1 * validweight25
+    } else if((grepl("Rating 2", input$validsca8, ignore.case = TRUE))){
+      2 * validweight25
+    } else if((grepl("Rating 3", input$validsca8, ignore.case = TRUE))){
+      3 * validweight25
+    } else if((grepl("Rating 4", input$validsca8, ignore.case = TRUE))){
+      4 * validweight25
+    } else if((grepl("Rating 5", input$validsca8, ignore.case = TRUE))){
+      5 * validweight25
+    } ))
+    
+    vscasumonethru4 <- v1 + v2 + v3 + v4
+    vscasumfivethru8 <- v5 + v6 +  v7 + v8
+    vcostsum <- vc1 + vc2 + vc3 + vc4
+    vincome <- vi1 + vi2 + vi3 + vi4
+    
+    vtotal <- (validweight30 * vscasumonethru4) + (vcostsum * validweight5) + (vincome * validweight5) + (vscasumfivethru8 * validweight60)
+    writeLines(c("Validity",vtotal))
+    writeLines(c("\n"))
+    writeLines("This factor of evaluation of the scope of work and appraisal results is broken down into 4 separate factors and is applied to multiple facets of the appraisal process. These 4 factors include accuracy, adequacy, completeness, and reconciliation. This has been developed to discuss and test the validity of the applied appraisal process and its limitations through no fault of the appraiser due to available data sets and the ability to derive information from that data. This factor is weighted at 40% of the overall risk and reliability score.")
+    writeLines(c("\n"))
+    
+    
+    
+    ######### RISK #########################
+    
+    riskweight34 <- 0.34
+    riskweight33 <- 0.33
+    rk1 <-    as.double(( if(grepl("Rating 1", input$risk1, ignore.case = TRUE)){
+      1 * riskweight34
+    } else if((grepl("Rating 2", input$risk1, ignore.case = TRUE))){
+      2 * riskweight34
+    } else if((grepl("Rating 3", input$risk1, ignore.case = TRUE))){
+      3 * riskweight34
+    } else if((grepl("Rating 4", input$risk1, ignore.case = TRUE))){
+      4 * riskweight34
+    } else if((grepl("Rating 5", input$risk1, ignore.case = TRUE))){
+      5 * riskweight34
+    } ))
+    
+    rk2 <-    as.double(( if(grepl("Rating 1", input$risk2, ignore.case = TRUE)){
+      1 * riskweight33
+    } else if((grepl("Rating 2", input$risk2, ignore.case = TRUE))){
+      2 * riskweight33
+    } else if((grepl("Rating 3", input$risk2, ignore.case = TRUE))){
+      3 * riskweight33
+    } else if((grepl("Rating 4", input$risk2, ignore.case = TRUE))){
+      4 * riskweight33
+    } else if((grepl("Rating 5", input$risk2, ignore.case = TRUE))){
+      5 * riskweight33
+    } ))
+    
+    rk3 <-    as.double(( if(grepl("Rating 1", input$risk3, ignore.case = TRUE)){
+      1 * riskweight33
+    } else if((grepl("Rating 2", input$risk3, ignore.case = TRUE))){
+      2 * riskweight33
+    } else if((grepl("Rating 3", input$risk3, ignore.case = TRUE))){
+      3 * riskweight33
+    } else if((grepl("Rating 4", input$risk3, ignore.case = TRUE))){
+      4 * riskweight33
+    } else if((grepl("Rating 5", input$risk3, ignore.case = TRUE))){
+      5 * riskweight33
+    } ))
+    
+    
+    rksum <- rk1 + rk2 + rk3 
+    writeLines(c("Subject Property Risk Score",rksum))
+    writeLines(c("\n"))
+    writeLines("Through no fault of the signing appraiser the subject property objectively is the subject property. Inherent characteristics make up the subject property and apply influence to the marketability and value. Due to recent changes in scope of work for appraisers this section is developed considering the type and extent of the appraisal inspection as well as characteristics of the subject property. This factor is measure based on the structure condition, location and external influences, as well as the scope of the inspection. This factor is weighted at 20% of the overall risk and reliability score.")
+    writeLines(c("\n"))
+    
+    
+    ########### CREDIBILITY ################
+    
+    credweight34 <- 0.34
+    credweight33 <- 0.33
+    c1 <-   as.double(( if(grepl("Rating 1", input$cred1, ignore.case = TRUE)){
+      1 * credweight34
+    }  else if((grepl("Rating 5", input$cred1, ignore.case = TRUE))){
+      5 * credweight34
+    } ))
+    
+    c2 <-    as.double(( if(grepl("Rating 1", input$cred2, ignore.case = TRUE)){
+      1 * credweight33
+    } else if((grepl("Rating 2", input$cred2, ignore.case = TRUE))){
+      2 * credweight33
+    } else if((grepl("Rating 3", input$cred2, ignore.case = TRUE))){
+      3 * credweight33
+    } else if((grepl("Rating 4", input$cred2, ignore.case = TRUE))){
+      4 * credweight33
+    } else if((grepl("Rating 5", input$cred2, ignore.case = TRUE))){
+      5 * credweight33
+    } ))
+    
+    c3 <-    as.double(( if(grepl("Rating 1", input$cred3, ignore.case = TRUE)){
+      1 * credweight33
+    } else if((grepl("Rating 2", input$cred3, ignore.case = TRUE))){
+      2 * credweight33
+    } else if((grepl("Rating 3", input$cred3, ignore.case = TRUE))){
+      3 * credweight33
+    } else if((grepl("Rating 4", input$cred3, ignore.case = TRUE))){
+      4 * credweight33
+    } else if((grepl("Rating 5", input$cred3, ignore.case = TRUE))){
+      5 * credweight33
+    } ))
+    
+    
+    csum <- c1 + c2 + c3 
+    writeLines(c("Credibility Score",csum))
+    writeLines("This factor is developed and measured based on the license level and competency of the signing appraiser. This section is weighted with a total weight of 5% influence on the overall score.")
+    writeLines("\n")
+
+```
+
+
+
+
+
+
+\newpage
+
+
+```{r ratings, include = TRUE, echo=FALSE, results='asis'}
+
+writeLines("Ratings Selection: The best available rating option has been selected to best closely resemble the factor with the subject property. This rating system is developed to be generalized and attempted to be as applicable as possible, however it is not perfect as that would be impossible. The rating system is in ongoing development, and has been produced to be a valuable additional service for the intended user.")
+        writeLines("\n")
+
+writeLines(c("RELIABILITY", "\n"))
+
+writeLines(c("Reliability Category 1 --", input$reli1, "\n" ))
+writeLines(c("Reliability Category 2 --", input$reli2, "\n" ))
+writeLines(c("Reliability Category 3 --", input$reli3, "\n" ))
+writeLines(c("Reliability Category 4 --", input$reli4, "\n" ))
+writeLines(c("Reliability Category 5 --", input$reli5, "\n" ))
+
+writeLines(c("VALIDITY", "\n"))
+
+writeLines(c("Validity SCA Category 1 --", input$validsca1, "\n"  ))
+writeLines(c("Validity SCA Category 2 --", input$validsca2, "\n"  ))
+writeLines(c("Validity SCA Category 3 --", input$validsca3, "\n"  ))
+writeLines(c("Validity SCA Category 4 --", input$validsca4, "\n"  ))
+writeLines(c("Validity SCA Category 5 --", input$validsca5, "\n"  ))
+writeLines(c("Validity SCA Category 6 --", input$validsca6, "\n"  ))
+writeLines(c("Validity SCA Category 7 --", input$validsca7, "\n"  ))
+writeLines(c("Validity SCA Category 8 --", input$validsca8, "\n" ))
+
+writeLines(c("Validity Cost Category 1 --", input$validcost1, "\n"  ))
+writeLines(c("Validity Cost Category 2 --", input$validcost2, "\n"  ))
+writeLines(c("Validity Cost Category 3 --", input$validcost3, "\n"  ))
+writeLines(c("Validity Cost Category 4 --", input$validcost4, "\n"  ))
+
+writeLines(c("Validity Income Category 1 --", input$validincome1, "\n"  ))
+writeLines(c("Validity Income Category 2 --", input$validincome2, "\n"  ))
+writeLines(c("Validity Income Category 3 --", input$validincome3, "\n"  ))
+writeLines(c("Validity Income Category 4 --", input$validincome4, "\n"  ))
+
+writeLines(c("SUBJECT RISK", "\n"))
+
+writeLines(c("Subject Risk Category 1 --", input$risk1, "\n"  ))
+writeLines(c("Subject Risk Category 2 --", input$risk2, "\n"  ))
+writeLines(c("Subject Risk Category 3 --", input$risk3, "\n"  ))
+
+writeLines(c("CREDIBILITY", "\n"))
+
+writeLines(c("Subject Credibility Category 1 --", input$cred1, "\n"  ))
+writeLines(c("Subject Credibility Category 2 --", input$cred2, "\n"  ))
+writeLines(c("Subject Credibility Category 3 --", input$cred3, "\n"  ))
+
+
+
+```
+
