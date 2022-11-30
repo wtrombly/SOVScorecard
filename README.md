@@ -8,19 +8,18 @@ Use github to clone the repository to your local hard drive. Open the Scorecard.
 
 ![Dependencies](https://github.com/wtrombly/SOVScorecard/blob/main/small-dependencies.JPG)
 
-## Usage
+## How To Use
 
-```python
-import foobar
+Editing is required for the amount the property sold header for and should be "ClosePrice". 
+### Make sure to change the header in your data file before importing. Do not include listings that have not sold.
 
-# returns 'words'
-foobar.pluralize('word')
+Changing the header in the dataframe being called is also possible by changing the code in the Histogram section of server.R by using the search and replace tool.
+The code has been written in an easy to view format for users that are not professional software developers and for ease of use for learners of R programming.
 
-# returns 'geese'
-foobar.pluralize('goose')
 
-# returns 'phenomenon'
-foobar.singularize('phenomena')
+
+
+
 ```
 
 ## Contributing
